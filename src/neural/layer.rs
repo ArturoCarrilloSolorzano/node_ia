@@ -69,7 +69,7 @@ impl<T: Ecuation> Layer for BaseLayer<T> {
             gradients.set_row(i, &gradient.transpose());
             layer_errors.set_row(i, &neuron_error_with_w.transpose());
         }
-        let added_errors = layer_errors.column_sum().as_slice().to_vec();
+        let added_errors = layer_errors.row_sum().as_slice().to_vec();
         BackpropagtionByproduct {
             gradients,
             errors: added_errors,
