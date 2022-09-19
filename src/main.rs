@@ -15,8 +15,11 @@ fn main() {
     let reader = file::reader::main("XOR_trn.csv");
     // Ejemplo compuerta OR
     let mut network = Network {
-        layers: vec![Box::new(BaseLayer::<TanH>::new(1, 2))],
-        learning_rate: 0.4,
+        layers: vec![
+            Box::new(BaseLayer::<TanH>::new(2, 2)),
+            Box::new(BaseLayer::<TanH>::new(1, 2)),
+        ],
+        learning_rate: 0.76,
     };
 
     /*
