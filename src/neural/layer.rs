@@ -10,6 +10,7 @@ pub trait Layer {
     fn back(&self, errors: &Vec<f32>, inputs: &DVector<f32>) -> BackpropagtionByproduct;
     fn upate_weights(&mut self, learning_rate: f32, gradients: &DMatrix<f32>);
     fn len(&self) -> usize;
+    fn get_weights(&self) -> DMatrix<f32>;
 }
 
 #[derive(Clone)]
@@ -84,5 +85,13 @@ impl<T: Ecuation> Layer for BaseLayer<T> {
 
     fn len(&self) -> usize {
         self.neurons.len()
+    }
+
+    fn get_weights(&self) -> DMatrix<f32> {
+        let mut weights = DMatrix::<f32>::zeros(self.neurons.len(), self.neurons[0].weights.len());
+        for (i, neuron) in self.neurons.iter().enumerate() {
+            weights.set_row(i, &neuron.weights.transpose());
+        }
+        weights
     }
 }
