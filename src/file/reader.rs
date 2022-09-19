@@ -24,8 +24,8 @@ fn reader(file_name: &str) -> Result< file_output, Box<dyn Error>>{
     Ok(file_output{inputs, expected: outputs})
 }
 
-pub fn main() -> file_output{
-    match reader("XOR_trn.csv"){
+pub fn main(file_name: &str) -> file_output{
+    match reader(file_name){
         Ok(output) => return output,
         Err(err)=>{
             println!("error running example: {}", err);

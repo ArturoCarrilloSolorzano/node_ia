@@ -12,7 +12,7 @@ pub mod neural;
 pub mod file;
 
 fn main() {
-    let reader = file::reader::main();
+    let reader = file::reader::main("XOR_trn.csv");
     // Ejemplo compuerta OR
     let mut network = Network {
         layers: vec![Box::new(BaseLayer::<TanH>::new(1, 2))],
