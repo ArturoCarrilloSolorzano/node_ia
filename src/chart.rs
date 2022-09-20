@@ -27,7 +27,7 @@ pub fn main(scatter_1: Vec<(f32, f32)>, scatter_2: Vec<(f32, f32)>){
         .set_y_scale(&y)
         .set_marker_type(MarkerType::Square)
         .set_label_visibility(false)
-        .set_custom_data_label("Apples".to_owned())
+        .set_custom_data_label("1".to_owned())
         .load_data(&scatter_1).unwrap();
 
     // Create Scatter view that is going to represent the data as points.
@@ -36,7 +36,7 @@ pub fn main(scatter_1: Vec<(f32, f32)>, scatter_2: Vec<(f32, f32)>){
         .set_y_scale(&y)
         .set_marker_type(MarkerType::Square)
         .set_label_visibility(false)
-        .set_custom_data_label("Oranges".to_owned())
+        .set_custom_data_label("-1".to_owned())
         .set_colors(Color::from_vec_of_hex_strings(vec!["#aa0000"]))
         .load_data(&scatter_2).unwrap();
     
@@ -45,13 +45,13 @@ pub fn main(scatter_1: Vec<(f32, f32)>, scatter_2: Vec<(f32, f32)>){
         .set_width(width)
         .set_height(height)
         .set_margins(top, right, bottom, left)
-        .add_title(String::from("Scatter Chart"))
+        .add_title(String::from("Clasificacion de XOR"))
         .add_view(&scatter_view_1)
         .add_view(&scatter_view_2)
         .add_axis_bottom(&x)
         .add_axis_left(&y)
-        .add_left_axis_label("Custom X Axis Label")
-        .add_bottom_axis_label("Custom Y Axis Label")
+        .add_left_axis_label("")
+        .add_bottom_axis_label("")
         .add_legend_at(AxisPosition::Bottom)
         .save("scatter-chart-two-datasets.svg").unwrap();
 }

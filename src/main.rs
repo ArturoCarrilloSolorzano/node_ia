@@ -23,7 +23,7 @@ fn main() {
 
 
     let max_iterations =  match buffer.trim_end() {
-        "" =>  Ok(1000 as i64),
+        "" =>  Ok(50 as i64),
         value => value.parse::<i64>(),
     }.expect("input invalido");
     let mut buffer = String::new();
@@ -78,18 +78,18 @@ fn main() {
         println!("\tError promedio: {}", error_avg);
     }
 
-        for input in test_reader.inputs.iter() {
-            let (x,y) = input;
-            let vector_input = DVector::from_vec(vec![x.to_owned(),y.to_owned()]);
-            let output = network.full_forward(&vector_input);
-            if output[0] > 0.0{
-                scatter_positive.push(input.clone());
-            }
-            else{
-                scatter_negative.push(input.clone());
-            }
+    for input in test_reader.inputs.iter() {
+        let (x,y) = input;
+        let vector_input = DVector::from_vec(vec![x.to_owned(),y.to_owned()]);
+        let output = network.full_forward(&vector_input);
+        if output[0] > 0.0{
+            scatter_positive.push(input.clone());
         }
-        println!("\tError promedio: {}", error_avg);
+        else{
+            scatter_negative.push(input.clone());
+        }
+    }
+    println!("\tError promedio: {}", error_avg);
 
     chart::main(scatter_positive, scatter_negative);
 }

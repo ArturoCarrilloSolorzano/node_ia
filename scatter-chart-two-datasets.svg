@@ -2,7 +2,7 @@
 <g class="g-chart">
 <g class="g-title" transform="translate(400,25)">
 <text dy=".35em" fill="#777" font-family="sans-serif" font-size="24px" text-anchor="middle" x="0" y="0">
-Scatter Chart
+Clasificacion de XOR
 </text>
 </g>
 <g class="x-axis" transform="translate(60,550)">
@@ -49,9 +49,6 @@ Scatter Chart
 3
 </text>
 </g>
-<text fill="#777" font-family="sans-serif" font-size="14px" text-anchor="middle" transform="rotate(0)" x="350" y="42">
-Custom Y Axis Label
-</text>
 </g>
 <g class="y-axis" transform="translate(60,90)">
 <line shape-rendering="crispEdges" stroke="#bbbbbb" stroke-width="1" x1="0" x2="0" y1="0" y2="460"/>
@@ -85,13 +82,19 @@ Custom Y Axis Label
 2
 </text>
 </g>
-<text fill="#777" font-family="sans-serif" font-size="14px" text-anchor="middle" transform="rotate(-90)" x="-230" y="-42">
-Custom X Axis Label
-</text>
 </g>
 <g class="g-view" transform="translate(60,90)">
 <g>
 <g class="scatter-point" transform="translate(235.13466,113.850006)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(233.24,345.046)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(234.87569,350.221)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(236.06334,348.74902)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(233.27501,117.96701)">
@@ -101,6 +104,12 @@ Custom X Axis Label
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(230.55666,115.407104)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(230.76668,344.90915)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(228.46832,342.7575)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(236.13683,113.436005)">
@@ -116,6 +125,9 @@ Custom X Axis Label
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(471.22836,347.6105)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(233.44649,345.276)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(232.93668,112.182526)">
@@ -136,13 +148,22 @@ Custom X Axis Label
 <g class="scatter-point" transform="translate(463.24484,345.782)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
+<g class="scatter-point" transform="translate(233.64485,345.46)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
 <g class="scatter-point" transform="translate(466.76,343.9673)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(468.4867,344.12372)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
+<g class="scatter-point" transform="translate(231.315,340.6047)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
 <g class="scatter-point" transform="translate(469.37335,348.7375)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(233.50952,344.6941)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(235.84401,114.21799)">
@@ -160,6 +181,12 @@ Custom X Axis Label
 <g class="scatter-point" transform="translate(229.775,113.688995)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
+<g class="scatter-point" transform="translate(232.38834,346.3685)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(232.28334,345.18402)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
 <g class="scatter-point" transform="translate(467.83334,350.6235)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
@@ -169,25 +196,46 @@ Custom X Axis Label
 <g class="scatter-point" transform="translate(469.59497,349.255)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
+<g class="scatter-point" transform="translate(233.40564,344.78497)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
 <g class="scatter-point" transform="translate(462.1995,347.9555)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(233.58185,113.0795)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
+<g class="scatter-point" transform="translate(233.81866,346.5065)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
 <g class="scatter-point" transform="translate(464.89566,348.3235)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(232.47,348.427)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(233.29834,115.080505)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
+<g class="scatter-point" transform="translate(235.97818,346.403)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(232.64499,344.96204)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
 <g class="scatter-point" transform="translate(233.91785,110.7565)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(233.08835,346.564)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(234.0415,111.94101)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(235.73781,118.65701)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(237.94635,342.25494)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(238.21935,113.20599)">
@@ -208,6 +256,9 @@ Custom X Axis Label
 <g class="scatter-point" transform="translate(470.27167,348.5305)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
+<g class="scatter-point" transform="translate(235.2175,340.1217)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
 <g class="scatter-point" transform="translate(467.145,340.883)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
@@ -217,10 +268,22 @@ Custom X Axis Label
 <g class="scatter-point" transform="translate(236.85666,113.573975)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
+<g class="scatter-point" transform="translate(233.48732,344.15704)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
 <g class="scatter-point" transform="translate(230.46332,110.5495)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(232.70334,114.16052)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(234.51048,350.0255)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(235.28983,343.5464)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(231.24501,340.17575)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(467.07498,344.2755)">
@@ -235,10 +298,19 @@ Custom X Axis Label
 <g class="scatter-point" transform="translate(234.38681,110.52652)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
+<g class="scatter-point" transform="translate(233.205,345.5865)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
 <g class="scatter-point" transform="translate(233.57133,113.79251)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
+<g class="scatter-point" transform="translate(232.81999,349.094)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
 <g class="scatter-point" transform="translate(462.26132,345.138)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(230.07834,343.1922)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(237.45752,116.15115)">
@@ -253,6 +325,9 @@ Custom X Axis Label
 <g class="scatter-point" transform="translate(470.69168,348.9445)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
+<g class="scatter-point" transform="translate(233.84666,344.07196)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
 <g class="scatter-point" transform="translate(235.53366,114.14899)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
@@ -260,6 +335,9 @@ Custom X Axis Label
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(233.04166,118.370636)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(229.35498,344.06158)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(234.44284,113.2865)">
@@ -280,10 +358,31 @@ Custom X Axis Label
 <g class="scatter-point" transform="translate(230.95332,113.2175)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
+<g class="scatter-point" transform="translate(233.69733,345.4945)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(229.61166,348.5765)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(234.07768,345.44852)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(233.88751,345.161)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
 <g class="scatter-point" transform="translate(235.69467,112.82651)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
+<g class="scatter-point" transform="translate(229.13333,343.4291)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
 <g class="scatter-point" transform="translate(232.66833,109.48001)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(233.28667,345.4255)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(229.005,344.71365)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(234.54901,114.26398)">
@@ -304,7 +403,13 @@ Custom X Axis Label
 <g class="scatter-point" transform="translate(472.3367,345.8625)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
+<g class="scatter-point" transform="translate(232.81999,348.542)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
 <g class="scatter-point" transform="translate(237.25566,112.76898)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(232.51666,346.11548)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(470.41162,349.393)">
@@ -325,16 +430,28 @@ Custom X Axis Label
 <g class="scatter-point" transform="translate(461.77017,342.286)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
+<g class="scatter-point" transform="translate(228.95833,346.196)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
 <g class="scatter-point" transform="translate(463.99963,346.127)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(467.80997,343.46588)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
+<g class="scatter-point" transform="translate(233.62267,344.9586)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
 <g class="scatter-point" transform="translate(464.5935,346.955)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
+<g class="scatter-point" transform="translate(233.9225,344.862)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
 <g class="scatter-point" transform="translate(232.94833,115.266815)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(234.53499,348.703)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(467.59998,340.5334)">
@@ -346,10 +463,37 @@ Custom X Axis Label
 <g class="scatter-point" transform="translate(233.41733,113.183014)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
+<g class="scatter-point" transform="translate(232.87833,349.4735)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(230.66168,344.18695)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(233.31,345.8625)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
 <g class="scatter-point" transform="translate(465.115,344.8666)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
+<g class="scatter-point" transform="translate(234.619,344.4572)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(234.661,343.55215)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(230.35832,341.8352)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(235.44617,342.53555)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(232.85501,346.081)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
 <g class="scatter-point" transform="translate(466.99335,347.369)">
+<rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
+</g>
+<g class="scatter-point" transform="translate(233.4185,345.276)">
 <rect fill="#1f77b4" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(232.76167,114.827484)">
@@ -357,34 +501,16 @@ Custom X Axis Label
 </g>
 </g>
 <g>
-<g class="scatter-point" transform="translate(233.24,345.046)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(234.87569,350.221)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(236.06334,348.74902)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
 <g class="scatter-point" transform="translate(463.6835,111.63049)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(471.55502,113.91901)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
-<g class="scatter-point" transform="translate(230.76668,344.90915)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(228.46832,342.7575)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
 <g class="scatter-point" transform="translate(465.612,115.0437)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(462.85516,114.01099)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(233.44649,345.276)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(469.81665,118.91345)">
@@ -405,9 +531,6 @@ Custom X Axis Label
 <g class="scatter-point" transform="translate(463.60883,114.620514)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
-<g class="scatter-point" transform="translate(233.64485,345.46)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
 <g class="scatter-point" transform="translate(466.51614,114.862)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
@@ -417,16 +540,10 @@ Custom X Axis Label
 <g class="scatter-point" transform="translate(466.71332,114.66647)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
-<g class="scatter-point" transform="translate(231.315,340.6047)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
 <g class="scatter-point" transform="translate(466.627,115.71875)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(467.31998,117.39545)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(233.50952,344.6941)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(463.88882,113.30951)">
@@ -438,16 +555,7 @@ Custom X Axis Label
 <g class="scatter-point" transform="translate(466.33182,115.34845)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
-<g class="scatter-point" transform="translate(232.38834,346.3685)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(232.28334,345.18402)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
 <g class="scatter-point" transform="translate(461.53796,117.45639)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(233.40564,344.78497)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(468.98834,113.47052)">
@@ -462,12 +570,6 @@ Custom X Axis Label
 <g class="scatter-point" transform="translate(466.27347,119.81622)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
-<g class="scatter-point" transform="translate(233.81866,346.5065)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(232.47,348.427)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
 <g class="scatter-point" transform="translate(467.08667,116.23166)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
@@ -477,25 +579,13 @@ Custom X Axis Label
 <g class="scatter-point" transform="translate(463.211,115.893555)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
-<g class="scatter-point" transform="translate(235.97818,346.403)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(232.64499,344.96204)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
 <g class="scatter-point" transform="translate(461.1133,114.517)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(233.08835,346.564)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(465.5677,114.12601)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(463.1993,117.7807)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(237.94635,342.25494)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(466.99335,112.49298)">
@@ -507,22 +597,7 @@ Custom X Axis Label
 <g class="scatter-point" transform="translate(468.7083,114.40201)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
-<g class="scatter-point" transform="translate(235.2175,340.1217)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(233.48732,344.15704)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(234.51048,350.0255)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(235.28983,343.5464)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
 <g class="scatter-point" transform="translate(465.60965,119.275696)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(231.24501,340.17575)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(466.72498,115.06439)">
@@ -537,31 +612,16 @@ Custom X Axis Label
 <g class="scatter-point" transform="translate(464.13266,117.64038)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
-<g class="scatter-point" transform="translate(233.205,345.5865)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(232.81999,349.094)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(230.07834,343.1922)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
 <g class="scatter-point" transform="translate(462.5355,116.285706)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(463.1025,116.727295)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
-<g class="scatter-point" transform="translate(233.84666,344.07196)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
 <g class="scatter-point" transform="translate(466.70163,115.05292)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(471.36832,113.481995)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(229.35498,344.06158)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(468.4283,111.21652)">
@@ -576,31 +636,10 @@ Custom X Axis Label
 <g class="scatter-point" transform="translate(468.82498,111.87201)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
-<g class="scatter-point" transform="translate(233.69733,345.4945)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(229.61166,348.5765)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(234.07768,345.44852)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(233.88751,345.161)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(229.13333,343.4291)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
 <g class="scatter-point" transform="translate(467.22665,114.83899)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(462.47482,112.03299)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(233.28667,345.4255)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(229.005,344.71365)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(467.89166,117.87155)">
@@ -609,28 +648,13 @@ Custom X Axis Label
 <g class="scatter-point" transform="translate(467.64667,116.982605)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
-<g class="scatter-point" transform="translate(232.81999,348.542)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(232.51666,346.11548)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
 <g class="scatter-point" transform="translate(464.17584,113.44751)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(466.3015,114.620514)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
-<g class="scatter-point" transform="translate(228.95833,346.196)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(233.62267,344.9586)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
 <g class="scatter-point" transform="translate(466.9583,114.896484)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(233.9225,344.862)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(468.54498,114.81601)">
@@ -642,67 +666,37 @@ Custom X Axis Label
 <g class="scatter-point" transform="translate(462.9205,110.71048)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
-<g class="scatter-point" transform="translate(234.53499,348.703)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
 <g class="scatter-point" transform="translate(466.70163,114.919495)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(468.63837,113.665985)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
-<g class="scatter-point" transform="translate(232.87833,349.4735)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(230.66168,344.18695)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
 <g class="scatter-point" transform="translate(465.9713,111.40048)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(233.31,345.8625)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(234.619,344.4572)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(470.155,116.89981)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
-<g class="scatter-point" transform="translate(234.661,343.55215)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(230.35832,341.8352)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
 <g class="scatter-point" transform="translate(468.87167,114.13748)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(235.44617,342.53555)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
 <g class="scatter-point" transform="translate(461.27548,116.86301)">
 <rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
-<g class="scatter-point" transform="translate(232.85501,346.081)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
-</g>
-<g class="scatter-point" transform="translate(233.4185,345.276)">
-<rect fill="#aa0000" height="10" width="10" x="-5" y="-5"/>
 </g>
 </g>
-</g>
-<g class="g-legend" transform="translate(60,602)">
+<g class="g-legend" transform="translate(60,586)">
 <g class="legend-entry" transform="translate(0,0)">
 <rect fill="#1f77b4" height="14" stroke="none" width="14" x="0" y="0"/>
 <text dy=".35em" fill="#777" font-family="sans-serif" font-size="12px" x="20" y="7">
-Apples
+1
 </text>
 </g>
-<g class="legend-entry" transform="translate(79,0)">
+<g class="legend-entry" transform="translate(44,0)">
 <rect fill="#aa0000" height="14" stroke="none" width="14" x="0" y="0"/>
 <text dy=".35em" fill="#777" font-family="sans-serif" font-size="12px" x="20" y="7">
-Oranges
+-1
 </text>
 </g>
 </g>
