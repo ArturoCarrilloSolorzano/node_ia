@@ -1,4 +1,4 @@
-use nalgebra::DVector;
+use nalgebra::{DVector, DMatrix};
 
 use super::{ecuations::ErrorEcuation, layer::Layer};
 
@@ -48,5 +48,13 @@ impl Network {
             layer_error = propagate.errors;
         }
         errors
+    }
+
+    pub fn get_weights(&self) -> Vec<DMatrix<f32>> {
+        let mut weights = Vec::<DMatrix<f32>>::with_capacity(self.layers.len());
+        for layer in self.layers.iter() {
+            weights.push(layer.get_weights());
+        }
+        weights
     }
 }
