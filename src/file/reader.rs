@@ -3,21 +3,21 @@ use std::process;
 use std::path::Path;
 
 pub struct FileOutput {
-    pub inputs: Vec<Vec<f32>>,
-    pub expected: Vec<Vec<f32>>,
+    pub inputs: Vec<(f32, f32)>,
+    pub expected: Vec<f32>,
 }
 
 fn reader(file_name: &str) -> Result< FileOutput, Box<dyn Error>>{
     let path = Path::new("./files/inputs/");
     let path = path.join(file_name);
     let mut rdr = csv::Reader::from_path(path)?;
-    let mut inputs:Vec<Vec<f32>> = Vec::new();
-    let mut outputs:Vec<Vec<f32>> = Vec::new();
+    let mut inputs:Vec<(f32, f32)> = Vec::new();
+    let mut outputs:Vec<f32> = Vec::new();
     
     for result in rdr.records(){
         let record = result?;
-        inputs.push(vec![record[0].parse()?, record[1].parse()?]);
-        outputs.push(vec![record[2].parse()?]);
+        inputs.push((record[0].parse()?, record[1].parse()?));
+        outputs.push(record[2].parse()?);
     }
     Ok(FileOutput{inputs, expected: outputs})
 }

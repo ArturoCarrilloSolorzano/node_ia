@@ -1,5 +1,5 @@
 use charts::{Chart, ScaleLinear, ScatterView, MarkerType, PointLabelPosition, Color, AxisPosition};
-pub fn main(scatter_1: Vec<Vec<f32>>, scatter_2: Vec<Vec<f32>>){
+pub fn main(scatter_1: Vec<(f32, f32)>, scatter_2: Vec<(f32, f32)>){
 
         // Define chart related sizes.
         let width = 800;
@@ -21,15 +21,12 @@ pub fn main(scatter_1: Vec<Vec<f32>>, scatter_2: Vec<Vec<f32>>){
             .set_domain(vec![-2_f32, 2_f32])
             .set_range(vec![height - top - bottom, 0]);
     
-        // You can use your own iterable as data as long as its items implement the `PointDatum` trait.
-        let scatter_data = vec![(120, 90), (12, 54), (100, 40), (180, 10)];
-    
         // Create Scatter view that is going to represent the data as points.
         let scatter_view_1 = ScatterView::new()
         .set_x_scale(&x)
         .set_y_scale(&y)
-        .set_marker_type(MarkerType::Circle)
-        .set_label_position(PointLabelPosition::N)
+        .set_marker_type(MarkerType::Square)
+        .set_label_visibility(false)
         .set_custom_data_label("Apples".to_owned())
         .load_data(&scatter_1).unwrap();
 
@@ -38,7 +35,7 @@ pub fn main(scatter_1: Vec<Vec<f32>>, scatter_2: Vec<Vec<f32>>){
         .set_x_scale(&x)
         .set_y_scale(&y)
         .set_marker_type(MarkerType::Square)
-        .set_label_position(PointLabelPosition::N)
+        .set_label_visibility(false)
         .set_custom_data_label("Oranges".to_owned())
         .set_colors(Color::from_vec_of_hex_strings(vec!["#aa0000"]))
         .load_data(&scatter_2).unwrap();
