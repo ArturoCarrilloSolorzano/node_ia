@@ -10,9 +10,12 @@ use crate::neural::{
 
 pub mod neural;
 pub mod file;
+pub mod chart;
 
 fn main() {
     let reader = file::reader::main("XOR_trn.csv");
+    let mut scatter_positive:Vec<Vec<f32>> = Vec::new();
+    let mut scatter_negative:Vec<Vec<f32>> = Vec::new();
     // Ejemplo compuerta OR
     let mut network = Network {
         layers: vec![
@@ -45,6 +48,12 @@ fn main() {
                 "got {} expected {}, error {}",
                 output[0], vector_expected[0], error
             );
+            if(vector_expected[0] == 1.0){
+                scatter_positive.push(input.clone());
+            }
+            if(vector_expected[0] == -1.0){
+                scatter_negative.push(input.clone());
+            }
             network.epoch::<SquaredError>(&vector_input, &vector_expected);
         }
         error_avg = error_avg / reader.inputs.len() as f32;
@@ -54,4 +63,5 @@ fn main() {
     let vector_expected = DVector::from_vec(vec![-1.0]);
     let output = network.full_forward(&vector_input);
     println!("got {} expected {}", output[0], vector_expected[0]);
+    chart::main(scatter_positive, scatter_negative);
 }
