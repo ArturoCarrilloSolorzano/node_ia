@@ -1,58 +1,39 @@
-use charts::{Chart, ScaleLinear, ScatterView, MarkerType, PointLabelPosition, Color, AxisPosition};
-pub fn main(scatter_1: Vec<(f32, f32)>, scatter_2: Vec<(f32, f32)>){
+use plotters::{
+    prelude::*,
+    style::{
+        full_palette::{BLACK, RED},
+        Color,
+    },
+};
 
-        // Define chart related sizes.
-        let width = 800;
-        let height = 600;
-        let (top, right, bottom, left) = (90, 40, 50, 60);
-    
-        // Create a band scale that will interpolate values in [0, 200] to values in the
-        // [0, availableWidth] range (the width of the chart without the margins).
-        let x = ScaleLinear::new()
-            .set_domain(vec![-3_f32, 3_f32])
-            .set_range(vec![0, width - left - right]);
-    
-        // Create a linear scale that will interpolate values in [0, 100] range to corresponding
-        // values in [availableHeight, 0] range (the height of the chart without the margins).
-        // The [availableHeight, 0] range is inverted because SVGs coordinate system's origin is
-        // in top left corner, while chart's origin is in bottom left corner, hence we need to invert
-        // the range on Y axis for the chart to display as though its origin is at bottom left.
-        let y = ScaleLinear::new()
-            .set_domain(vec![-2_f32, 2_f32])
-            .set_range(vec![height - top - bottom, 0]);
-    
-        // Create Scatter view that is going to represent the data as points.
-        let scatter_view_1 = ScatterView::new()
-        .set_x_scale(&x)
-        .set_y_scale(&y)
-        .set_marker_type(MarkerType::Square)
-        .set_label_visibility(false)
-        .set_custom_data_label("1".to_owned())
-        .load_data(&scatter_1).unwrap();
+pub fn main(scatter_1: Vec<(f32, f32, f32)>, scatter_2: Vec<(f32, f32, f32)>, name: &str) {
+    let root = BitMapBackend::new(name, (640, 480)).into_drawing_area();
+    root.fill(&WHITE).expect("fail to fill");
+    let root = root.margin(10, 10, 10, 10);
 
-    // Create Scatter view that is going to represent the data as points.
-        let scatter_view_2 = ScatterView::new()
-        .set_x_scale(&x)
-        .set_y_scale(&y)
-        .set_marker_type(MarkerType::Square)
-        .set_label_visibility(false)
-        .set_custom_data_label("-1".to_owned())
-        .set_colors(Color::from_vec_of_hex_strings(vec!["#aa0000"]))
-        .load_data(&scatter_2).unwrap();
-    
-        // Generate and save the chart.
-        Chart::new()
-        .set_width(width)
-        .set_height(height)
-        .set_margins(top, right, bottom, left)
-        .add_title(String::from("Clasificacion de XOR"))
-        .add_view(&scatter_view_1)
-        .add_view(&scatter_view_2)
-        .add_axis_bottom(&x)
-        .add_axis_left(&y)
-        .add_left_axis_label("")
-        .add_bottom_axis_label("")
-        .add_legend_at(AxisPosition::Bottom)
-        .save("scatter-chart-two-datasets.svg").unwrap();
+    let mut chart = ChartBuilder::on(&root)
+        .caption("Test calisification", ("san-serif", 40).into_font())
+        .x_label_area_size(20)
+        .y_label_area_size(40)
+        .build_cartesian_3d(-1.5f32..1.5f32, -1.5f32..1.5f32, -1.5f32..1.5f32)
+        .expect("");
+
+    chart
+        .configure_axes()
+        .light_grid_style(BLACK.mix(0.15))
+        .max_light_lines(3)
+        .draw()
+        .expect("help");
+
+    chart.draw_series(PointSeries::of_element(scatter_1, 5, &BLUE, &|c, s, st| {
+        return EmptyElement::at(c)    // We want to construct a composed element on-the-fly
+            + Circle::new((0,0),s,st.filled()) // At this point, the new pixel coordinate is established
+    })).expect("help");
+
+    chart.draw_series(PointSeries::of_element(scatter_2, 5, &RED, &|c, s, st| {
+        return EmptyElement::at(c)    // We want to construct a composed element on-the-fly
+            + Circle::new((0,0),s,st.filled()) // At this point, the new pixel coordinate is established
+    })).expect("help");
+
+    root.present().expect("dfad");
 }
-

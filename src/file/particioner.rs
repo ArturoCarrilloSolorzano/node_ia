@@ -28,14 +28,11 @@ pub fn main (file_output: FileOutput2)-> Datasets{
     data.dataset.push(middle200Partition(&file_output));
 
     return  data;
-    
 }
 
 
 pub fn randomPartition(file_output: &FileOutput2) -> Partition{
     let mut rng = rand::thread_rng();
-    let mut train: FileOutput2 = FileOutput2::default();
-    let mut test: FileOutput2 = FileOutput2::default();
 
     let mut inputsTrainValues: Vec<(f32,f32,f32)> =Vec::new();
     let mut outputsTrainValues: Vec<f32> =Vec::new();
@@ -67,9 +64,9 @@ pub fn randomPartition(file_output: &FileOutput2) -> Partition{
             outputsTestValues.push(file_output.expected[index].clone());
         }
     }
-    train = FileOutput2 {inputs: inputsTrainValues, expected: outputsTrainValues};
-    test = FileOutput2 {inputs: inputsTestValues, expected: outputsTestValues};
-    return Partition { train: train, test: test };
+    let train = FileOutput2 {inputs: inputsTrainValues, expected: outputsTrainValues};
+    let test = FileOutput2 {inputs: inputsTestValues, expected: outputsTestValues};
+    return Partition { train, test };
 
 }
 
