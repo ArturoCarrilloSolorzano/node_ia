@@ -12,7 +12,7 @@ pub fn main() -> LearningRules{
     stdin().read_line(&mut buffer).unwrap();
 
     let max_iterations = match buffer.trim_end() {
-        "" => Ok(400 as i64),
+        "" => Ok(600 as i64),
         value => value.parse::<i64>(),
     }
     .expect("input invalido");
