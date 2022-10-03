@@ -1,52 +1,25 @@
 extern crate libm;
-use std::io::stdin;
 
 use file::reader::FileOutput2;
 use nalgebra::DVector;
 
-use crate::neural::{
+use crate::{neural::{
     ecuations::{squared::SquaredError, tanh::TanH},
     layer::BaseLayer,
     network::Network,
-};
+},};
 
 use self::file::{particioner, particioner2};
 
 pub mod chart;
 pub mod file;
 pub mod neural;
+pub mod inputs;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let mut buffer = String::new();
-    println!("Numero de iteraciones:");
-    // `read_line` returns `Result` of bytes read
-    stdin().read_line(&mut buffer)?;
 
-    let max_iterations = match buffer.trim_end() {
-        "" => Ok(50 as i64),
-        value => value.parse::<i64>(),
-    }
-    .expect("input invalido");
-    let mut buffer = String::new();
-    println!("Error deseado:");
-    // `read_line` returns `Result` of bytes read
-    stdin().read_line(&mut buffer)?;
-
-    let min_error = match buffer.trim_end() {
-        "" => Ok(0.1 as f32),
-        value => value.parse::<f32>(),
-    }
-    .expect("input invalido");
-    let mut buffer = String::new();
-    println!("Tasa de aprendizaje:");
-    // `read_line` returns `Result` of bytes read
-    stdin().read_line(&mut buffer)?;
-
-    let learning_rate = match buffer.trim_end() {
-        "" => Ok(0.5 as f32),
-        value => value.parse::<f32>(),
-    }
-    .expect("input invalido");
+    let lerning_rules = inputs::rules::main();
+    let network_size = inputs::neural_config::main();
 
     let data = file::reader::main2("spheres1d10.csv");
 
@@ -55,11 +28,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     for (i, partition) in partitioned_data.dataset[..5].iter().enumerate() {
         println!("\nPartición {}\n", i);
         full(
-            min_error,
-            max_iterations as u32,
+            lerning_rules.min_error,
+            lerning_rules.max_iterations as u32,
             &partition.train,
             &partition.test,
-            learning_rate,
+            lerning_rules.learning_rate,
             &format!("graphs/spheres1d10-{}.png", i),
         );
     }
@@ -72,27 +45,27 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let first200_partition = particioner2::first200Partition(&data10);
     let last200_partition = particioner2::last200Partition(&data10);
     full(
-        min_error,
-        max_iterations as u32,
+        lerning_rules.min_error,
+        lerning_rules.max_iterations as u32,
         &random_partition.train,
         &random_partition.test,
-        learning_rate,
+        lerning_rules.learning_rate,
         "graphs/spheres2d10-random.png",
     );
     full(
-        min_error,
-        max_iterations as u32,
+        lerning_rules.min_error,
+        lerning_rules.max_iterations as u32,
         &first200_partition.train,
         &first200_partition.test,
-        learning_rate,
+        lerning_rules.learning_rate,
         "graphs/spheres2d10-first200.png",
     );
     full(
-        min_error,
-        max_iterations as u32,
+        lerning_rules.min_error,
+        lerning_rules.max_iterations as u32,
         &last200_partition.train,
         &last200_partition.test,
-        learning_rate,
+        lerning_rules.learning_rate,
         "graphs/spheres2d10-last200.png",
     );
 
@@ -100,27 +73,27 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let on300_partition = particioner2::on300And700Partition(&data50);
     let on200_partition = particioner2::on200And800Partition(&data50);
     full(
-        min_error,
-        max_iterations as u32,
+        lerning_rules.min_error,
+        lerning_rules.max_iterations as u32,
         &first100_partition.train,
         &first100_partition.test,
-        learning_rate,
+        lerning_rules.learning_rate,
         "graphs/spheres2d50-first100.png",
     );
     full(
-        min_error,
-        max_iterations as u32,
+        lerning_rules.min_error,
+        lerning_rules.max_iterations as u32,
         &on300_partition.train,
         &on300_partition.test,
-        learning_rate,
+        lerning_rules.learning_rate,
         "graphs/spheres2d50-on300.png",
     );
     full(
-        min_error,
-        max_iterations as u32,
+        lerning_rules.min_error,
+        lerning_rules.max_iterations as u32,
         &on200_partition.train,
         &on200_partition.test,
-        learning_rate,
+        lerning_rules.learning_rate,
         "graphs/spheres2d50-on200.png",
     );
 
@@ -129,35 +102,35 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let on800_partition = particioner2::on0And300Partition(&data70);
     let middle200_partition = particioner2::on0And300Partition(&data70);
     full(
-        min_error,
-        max_iterations as u32,
+        lerning_rules.min_error,
+        lerning_rules.max_iterations as u32,
         &on0_partition.train,
         &on0_partition.test,
-        learning_rate,
+        lerning_rules.learning_rate,
         "graphs/spheres2d70-on0.png",
     );
     full(
-        min_error,
-        max_iterations as u32,
+        lerning_rules.min_error,
+        lerning_rules.max_iterations as u32,
         &on100_partition.train,
         &on100_partition.test,
-        learning_rate,
+        lerning_rules.learning_rate,
         "graphs/spheres2d70-on100.png",
     );
     full(
-        min_error,
-        max_iterations as u32,
+        lerning_rules.min_error,
+        lerning_rules.max_iterations as u32,
         &on800_partition.train,
         &on800_partition.test,
-        learning_rate,
+        lerning_rules.learning_rate,
         "graphs/spheres2d70-on800.png",
     );
     full(
-        min_error,
-        max_iterations as u32,
+        lerning_rules.min_error,
+        lerning_rules.max_iterations as u32,
         &middle200_partition.train,
         &middle200_partition.test,
-        learning_rate,
+        lerning_rules.learning_rate,
         "graphs/spheres2d70-middle200.png",
     );
     Ok(())
