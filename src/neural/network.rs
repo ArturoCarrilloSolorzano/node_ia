@@ -109,7 +109,7 @@ impl Network {
             avg = T::calc(&error.raw_output, &expected[i]).sum() / error.raw_output.len() as f32;
             if example_counter == batch_len {
                 for gradient in errors.iter_mut() {
-                    gradient.scale_mut(batch_len as f32);
+                    gradient.scale_mut(1.0/batch_len as f32);
                 }
                 example_counter = 0;
                 self.update_weights(&errors).expect("error");
