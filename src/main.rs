@@ -1,190 +1,98 @@
 extern crate libm;
 
-use file::reader::FileOutput2;
+use file::reader::{FileOutput, FileOutput2};
 use nalgebra::DVector;
+use neural::layer::Layer;
 
-use crate::{neural::{
+use crate::neural::{
     ecuations::{squared::SquaredError, tanh::TanH},
     layer::BaseLayer,
     network::Network,
-},};
+};
 
 use self::file::{particioner, particioner2};
 
 pub mod chart;
 pub mod file;
-pub mod neural;
 pub mod inputs;
+pub mod neural;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-
     let lerning_rules = inputs::rules::main();
     let network_size = inputs::neural_config::main();
 
-    let data = file::reader::main2("spheres1d10.csv");
+    let train_data = file::reader::main("concentlite.csv");
+    let _test_data = file::reader::main("concentlite_tst.csv");
+    let mut layers = Vec::<Box<dyn Layer>>::with_capacity(network_size.len()+1);
+    let mut input_len = 2;
+    let final_out_len = 1;
 
-    let partitioned_data = particioner::main(data);
-
-    for (i, partition) in partitioned_data.dataset[..5].iter().enumerate() {
-        println!("\nPartición {}\n", i);
-        full(
-            lerning_rules.min_error,
-            lerning_rules.max_iterations as u32,
-            &partition.train,
-            &partition.test,
-            lerning_rules.learning_rate,
-            &format!("graphs/spheres1d10-{}.png", i),
-        );
+    for size in network_size.iter() {
+        layers.push(Box::from(BaseLayer::<TanH>::new(*size, input_len)));
+        input_len = *size;
     }
+    layers.push(Box::from(BaseLayer::<TanH>::new(final_out_len, input_len)));
 
-    let data10 = file::reader::main2("spheres2d10.csv");
-    let data50 = file::reader::main2("spheres2d50.csv");
-    let data70 = file::reader::main2("spheres2d70.csv");
+    let mut network = Network{
+        layers,
+        learning_rate: lerning_rules.learning_rate
+    };
 
-    let random_partition = particioner2::randomPartition(&data10);
-    let first200_partition = particioner2::first200Partition(&data10);
-    let last200_partition = particioner2::last200Partition(&data10);
     full(
+        &mut network,
         lerning_rules.min_error,
         lerning_rules.max_iterations as u32,
-        &random_partition.train,
-        &random_partition.test,
-        lerning_rules.learning_rate,
-        "graphs/spheres2d10-random.png",
-    );
-    full(
-        lerning_rules.min_error,
-        lerning_rules.max_iterations as u32,
-        &first200_partition.train,
-        &first200_partition.test,
-        lerning_rules.learning_rate,
-        "graphs/spheres2d10-first200.png",
-    );
-    full(
-        lerning_rules.min_error,
-        lerning_rules.max_iterations as u32,
-        &last200_partition.train,
-        &last200_partition.test,
-        lerning_rules.learning_rate,
-        "graphs/spheres2d10-last200.png",
+        &train_data,
+        &train_data,
+        &format!("graphs/concentile.png"),
     );
 
-    let first100_partition = particioner2::first100last100Partition(&data50);
-    let on300_partition = particioner2::on300And700Partition(&data50);
-    let on200_partition = particioner2::on200And800Partition(&data50);
-    full(
-        lerning_rules.min_error,
-        lerning_rules.max_iterations as u32,
-        &first100_partition.train,
-        &first100_partition.test,
-        lerning_rules.learning_rate,
-        "graphs/spheres2d50-first100.png",
-    );
-    full(
-        lerning_rules.min_error,
-        lerning_rules.max_iterations as u32,
-        &on300_partition.train,
-        &on300_partition.test,
-        lerning_rules.learning_rate,
-        "graphs/spheres2d50-on300.png",
-    );
-    full(
-        lerning_rules.min_error,
-        lerning_rules.max_iterations as u32,
-        &on200_partition.train,
-        &on200_partition.test,
-        lerning_rules.learning_rate,
-        "graphs/spheres2d50-on200.png",
-    );
-
-    let on0_partition = particioner2::on0And300Partition(&data70);
-    let on100_partition = particioner2::on0And300Partition(&data70);
-    let on800_partition = particioner2::on0And300Partition(&data70);
-    let middle200_partition = particioner2::on0And300Partition(&data70);
-    full(
-        lerning_rules.min_error,
-        lerning_rules.max_iterations as u32,
-        &on0_partition.train,
-        &on0_partition.test,
-        lerning_rules.learning_rate,
-        "graphs/spheres2d70-on0.png",
-    );
-    full(
-        lerning_rules.min_error,
-        lerning_rules.max_iterations as u32,
-        &on100_partition.train,
-        &on100_partition.test,
-        lerning_rules.learning_rate,
-        "graphs/spheres2d70-on100.png",
-    );
-    full(
-        lerning_rules.min_error,
-        lerning_rules.max_iterations as u32,
-        &on800_partition.train,
-        &on800_partition.test,
-        lerning_rules.learning_rate,
-        "graphs/spheres2d70-on800.png",
-    );
-    full(
-        lerning_rules.min_error,
-        lerning_rules.max_iterations as u32,
-        &middle200_partition.train,
-        &middle200_partition.test,
-        lerning_rules.learning_rate,
-        "graphs/spheres2d70-middle200.png",
-    );
     Ok(())
 }
 
 fn full(
+    network: &mut Network,
     min_error: f32,
     max_iterations: u32,
-    input: &FileOutput2,
-    test: &FileOutput2,
-    learning_rate: f32,
+    input: &FileOutput,
+    test: &FileOutput,
     name: &str,
 ) {
-    let network = train(min_error, max_iterations, input, learning_rate);
-    test_and_chart(&network, name, test);
+    train(network, min_error, max_iterations, input);
+    test_and_chart(network, name, test);
 }
 
-fn train(min_error: f32, max_iterations: u32, train: &FileOutput2, learning_rate: f32) -> Network {
-    let mut network = Network {
-        layers: vec![
-            Box::new(BaseLayer::<TanH>::new(5, 3)),
-            Box::new(BaseLayer::<TanH>::new(1, 5)),
-        ],
-        learning_rate,
-    };
+fn train(network: &mut Network, min_error: f32, max_iterations: u32, train: &FileOutput) {
     let mut inputs = Vec::<DVector<f32>>::new();
     let mut expected = Vec::<DVector<f32>>::new();
     for (i, input) in train.inputs.iter().enumerate() {
-        let (x, y, z) = input;
-        inputs.push(DVector::from_vec(vec![
-            x.to_owned(),
-            y.to_owned(),
-            z.to_owned(),
-        ]));
+        let (x, y) = input;
+        inputs.push(DVector::from_vec(vec![x.to_owned(), y.to_owned()]));
         expected.push(DVector::from_vec(vec![train.expected[i]]));
     }
     let mut error_avg = 1.0;
     let mut gen = 0;
-    while error_avg > min_error && gen < max_iterations {
+    while gen < max_iterations {
         println!("----- Entrenando generación {} -----", gen);
-        error_avg = network.mini_batch_epoch::<SquaredError>(&inputs, &expected, 32).expect("error");
+       // error_avg = network
+       //     .mini_batch_epoch::<SquaredError>(&inputs, &expected, 32)
+       //     .expect("error");
+        error_avg = network
+            .sgd_epoch::<SquaredError>(&inputs, &expected)
+            .expect("error");
         gen += 1;
         println!("\tError promedio: {}", error_avg);
     }
-    network
 }
 
-fn test_and_chart(network: &Network, name: &str, test: &FileOutput2) {
-    let mut scatter_positive: Vec<(f32, f32, f32)> = Vec::new();
-    let mut scatter_negative: Vec<(f32, f32, f32)> = Vec::new();
+fn test_and_chart(network: &Network, name: &str, test: &FileOutput) {
+    let mut scatter_positive: Vec<(f32, f32)> = Vec::new();
+    let mut scatter_negative: Vec<(f32, f32)> = Vec::new();
     for input in test.inputs.iter() {
-        let (x, y, z) = input;
-        let vector_input = DVector::from_vec(vec![x.to_owned(), y.to_owned(), z.to_owned()]);
+        let (x, y) = input;
+        let vector_input = DVector::from_vec(vec![x.to_owned(), y.to_owned()]);
         let output = network.full_forward(&vector_input);
+        println!("{}", output[0]);
         if output[0] > 0.0 {
             scatter_positive.push(input.clone());
         } else {

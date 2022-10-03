@@ -25,7 +25,7 @@ impl Network {
     }
 
     pub fn full_forward(&self, inputs: &DVector<f32>) -> DVector<f32> {
-        let mut output = inputs.clone();
+        let mut output = inputs.clone_owned();
         for layer in self.layers.iter() {
             output = layer.forward(&output);
         }
@@ -45,6 +45,7 @@ impl Network {
         let final_layer_index = self.layers.len() - 1;
         let output = layer_inputs.last().unwrap();
         let errors_deriv = T::deriv(output, expected);
+        println!("input: {}, esperdo {}, deriv {}", inputs, expected, errors_deriv[0]);
         let mut layer_error = errors_deriv.as_slice().to_vec();
         let mut gradients = Vec::<DMatrix<f32>>::with_capacity(self.layers.len());
         for (i, layer) in self.layers.iter().rev().enumerate() {
@@ -80,6 +81,7 @@ impl Network {
         for (i, input) in inputs.iter().enumerate() {
             let error = self.calc_error::<T>(&input, &expected[i]);
             self.update_weights(&error.gradients)?;
+            println!("output: {}, expected {}", error.raw_output[0], expected[i][0]);
             avg = T::calc(&error.raw_output, &expected[i]).sum() / error.raw_output.len() as f32;
         }
         avg /= inputs.len() as f32;

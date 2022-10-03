@@ -6,7 +6,7 @@ use plotters::{
     },
 };
 
-pub fn main(scatter_1: Vec<(f32, f32, f32)>, scatter_2: Vec<(f32, f32, f32)>, name: &str) {
+pub fn main(scatter_1: Vec<(f32, f32)>, scatter_2: Vec<(f32, f32)>, name: &str) {
     let root = BitMapBackend::new(name, (640, 480)).into_drawing_area();
     root.fill(&WHITE).expect("fail to fill");
     let root = root.margin(10, 10, 10, 10);
@@ -15,12 +15,11 @@ pub fn main(scatter_1: Vec<(f32, f32, f32)>, scatter_2: Vec<(f32, f32, f32)>, na
         .caption("Test calisification", ("san-serif", 40).into_font())
         .x_label_area_size(20)
         .y_label_area_size(40)
-        .build_cartesian_3d(-1.5f32..1.5f32, -1.5f32..1.5f32, -1.5f32..1.5f32)
+        .build_cartesian_2d(0f32..1f32, 0f32..1f32)
         .expect("");
 
     chart
-        .configure_axes()
-        .light_grid_style(BLACK.mix(0.15))
+        .configure_mesh()
         .max_light_lines(3)
         .draw()
         .expect("help");
