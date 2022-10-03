@@ -10,12 +10,14 @@ pub trait Layer {
     fn back(&self, errors: &Vec<f32>, inputs: &DVector<f32>) -> BackpropagtionByproduct;
     fn upate_weights(&mut self, learning_rate: f32, gradients: &DMatrix<f32>);
     fn len(&self) -> usize;
+    fn inputs_len(&self) -> usize;
     fn get_weights(&self) -> DMatrix<f32>;
 }
 
 #[derive(Clone)]
 pub struct BaseLayer<T: Ecuation> {
     pub neurons: Vec<Neuron>,
+    inputs: usize,
     phantom_type: PhantomData<T>,
 }
 
@@ -24,6 +26,7 @@ impl<T: Ecuation> BaseLayer<T> {
         let mut layer = BaseLayer {
             neurons: Vec::with_capacity(nodes),
             phantom_type: PhantomData,
+            inputs,
         };
         for i in 0..nodes {
             layer.neurons.push(Neuron::new(inputs, i as u32));
@@ -32,8 +35,10 @@ impl<T: Ecuation> BaseLayer<T> {
     }
 
     pub fn from_neurons(neurons: &Vec<Neuron>) -> Self {
+        let first = neurons.first().unwrap();
         BaseLayer {
             neurons: neurons.to_vec(),
+            inputs: first.weights.len(),
             phantom_type: PhantomData,
         }
     }
@@ -43,8 +48,10 @@ impl<T: Ecuation> BaseLayer<T> {
         for (i, row) in weights.row_iter().enumerate() {
             neurons.push(Neuron::from_weights(&row.transpose(), i as u32));
         }
+        let first_len = neurons.first().unwrap().weights.len();
         BaseLayer {
             neurons,
+            inputs: first_len,
             phantom_type: PhantomData,
         }
     }
@@ -94,4 +101,7 @@ impl<T: Ecuation> Layer for BaseLayer<T> {
         }
         weights
     }
+    fn inputs_len(&self) -> usize {
+        self.inputs
+   }
 }

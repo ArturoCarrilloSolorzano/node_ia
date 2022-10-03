@@ -147,6 +147,7 @@ fn full(
     let network = train(min_error, max_iterations, input, learning_rate);
     test_and_chart(&network, name, test);
 }
+
 fn train(min_error: f32, max_iterations: u32, train: &FileOutput2, learning_rate: f32) -> Network {
     let mut network = Network {
         layers: vec![
@@ -155,20 +156,23 @@ fn train(min_error: f32, max_iterations: u32, train: &FileOutput2, learning_rate
         ],
         learning_rate,
     };
+    let mut inputs = Vec::<DVector<f32>>::new();
+    let mut expected = Vec::<DVector<f32>>::new();
+    for (i, input) in train.inputs.iter().enumerate() {
+        let (x, y, z) = input;
+        inputs.push(DVector::from_vec(vec![
+            x.to_owned(),
+            y.to_owned(),
+            z.to_owned(),
+        ]));
+        expected.push(DVector::from_vec(vec![train.expected[i]]));
+    }
     let mut error_avg = 1.0;
     let mut gen = 0;
     while error_avg > min_error && gen < max_iterations {
-        error_avg = 0.0;
         println!("----- Entrenando generación {} -----", gen);
-        for (i, input) in train.inputs.iter().enumerate() {
-            let (x, y, z) = input;
-            let vector_input = DVector::from_vec(vec![x.to_owned(), y.to_owned(), z.to_owned()]);
-            let vector_expected = DVector::from_vec(vec![train.expected[i]]);
-            let error = network.epoch::<SquaredError>(&vector_input, &vector_expected);
-            error_avg += error[0];
-        }
+        error_avg = network.mini_batch_epoch::<SquaredError>(&inputs, &expected, 32).expect("error");
         gen += 1;
-        error_avg = error_avg / train.inputs.len() as f32;
         println!("\tError promedio: {}", error_avg);
     }
     network
