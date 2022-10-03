@@ -1,6 +1,4 @@
-extern crate libm;
-
-use file::reader::{FileOutput, FileOutput2};
+use file::reader::FileOutput;
 use nalgebra::DVector;
 use neural::layer::Layer;
 
@@ -9,8 +7,6 @@ use crate::neural::{
     layer::BaseLayer,
     network::Network,
 };
-
-use self::file::{particioner, particioner2};
 
 pub mod chart;
 pub mod file;
@@ -21,9 +17,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let lerning_rules = inputs::rules::main();
     let network_size = inputs::neural_config::main();
 
+    //let train_data = file::reader::main("XOR_trn.csv");
     let train_data = file::reader::main("concentlite.csv");
     let _test_data = file::reader::main("concentlite_tst.csv");
-    let mut layers = Vec::<Box<dyn Layer>>::with_capacity(network_size.len()+1);
+    let mut layers = Vec::<Box<dyn Layer>>::with_capacity(network_size.len() + 1);
     let mut input_len = 2;
     let final_out_len = 1;
 
@@ -33,9 +30,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     layers.push(Box::from(BaseLayer::<TanH>::new(final_out_len, input_len)));
 
-    let mut network = Network{
+    let mut network = Network {
         layers,
-        learning_rate: lerning_rules.learning_rate
+        learning_rate: lerning_rules.learning_rate,
     };
 
     full(
@@ -44,7 +41,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         lerning_rules.max_iterations as u32,
         &train_data,
         &train_data,
-        &format!("graphs/concentile.png"),
+        "graphs/concentile.png",
     );
 
     Ok(())
@@ -72,14 +69,16 @@ fn train(network: &mut Network, min_error: f32, max_iterations: u32, train: &Fil
     }
     let mut error_avg = 1.0;
     let mut gen = 0;
-    while gen < max_iterations {
+    while error_avg > min_error && gen < max_iterations {
         println!("----- Entrenando generación {} -----", gen);
-       // error_avg = network
-       //     .mini_batch_epoch::<SquaredError>(&inputs, &expected, 32)
-       //     .expect("error");
         error_avg = network
-            .sgd_epoch::<SquaredError>(&inputs, &expected)
+            .mini_batch_epoch::<SquaredError>(&inputs, &expected, 32)
             .expect("error");
+        // updates the learning rate
+        //network.learning_rate *= 1.0 / (1.0 + 0.001 * gen as f32);
+        // error_avg = network
+        //     .sgd_epoch::<SquaredError>(&inputs, &expected)
+        //     .expect("error");
         gen += 1;
         println!("\tError promedio: {}", error_avg);
     }
@@ -92,7 +91,7 @@ fn test_and_chart(network: &Network, name: &str, test: &FileOutput) {
         let (x, y) = input;
         let vector_input = DVector::from_vec(vec![x.to_owned(), y.to_owned()]);
         let output = network.full_forward(&vector_input);
-        println!("{}", output[0]);
+        //println!("{}", output);
         if output[0] > 0.0 {
             scatter_positive.push(input.clone());
         } else {

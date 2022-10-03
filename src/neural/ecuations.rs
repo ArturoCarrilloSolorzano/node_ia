@@ -1,5 +1,6 @@
 pub mod tanh;
 pub mod squared;
+pub mod sigmoid;
 use na::DVector;
 
 use super::na;

@@ -45,7 +45,6 @@ impl Network {
         let final_layer_index = self.layers.len() - 1;
         let output = layer_inputs.last().unwrap();
         let errors_deriv = T::deriv(output, expected);
-        println!("input: {}, esperdo {}, deriv {}", inputs, expected, errors_deriv[0]);
         let mut layer_error = errors_deriv.as_slice().to_vec();
         let mut gradients = Vec::<DMatrix<f32>>::with_capacity(self.layers.len());
         for (i, layer) in self.layers.iter().rev().enumerate() {
@@ -81,8 +80,7 @@ impl Network {
         for (i, input) in inputs.iter().enumerate() {
             let error = self.calc_error::<T>(&input, &expected[i]);
             self.update_weights(&error.gradients)?;
-            println!("output: {}, expected {}", error.raw_output[0], expected[i][0]);
-            avg = T::calc(&error.raw_output, &expected[i]).sum() / error.raw_output.len() as f32;
+            avg += T::calc(&error.raw_output, &expected[i]).sum() / error.raw_output.len() as f32;
         }
         avg /= inputs.len() as f32;
         Ok(avg)
@@ -98,6 +96,7 @@ impl Network {
             return Err(());
         }
         let mut avg = 0.0;
+        // New gradients in 0
         let mut errors = <Vec<DMatrix<f32>>>::new();
         for layer in self.layers.iter().rev() {
             errors.push(DMatrix::zeros(layer.len(), layer.inputs_len() + 1));
@@ -105,16 +104,22 @@ impl Network {
         let mut example_counter = 1;
         for (i, input) in inputs.iter().enumerate() {
             let error = self.calc_error::<T>(&input, &expected[i]);
+            // Adds up the past gradients to the current ones
             for (i, gradient) in error.gradients.iter().enumerate() {
                 errors[i] += gradient;
             }
-            avg = T::calc(&error.raw_output, &expected[i]).sum() / error.raw_output.len() as f32;
+            // Averga error of all outputs
+            avg += T::calc(&error.raw_output, &expected[i]).sum() / error.raw_output.len() as f32;
             if example_counter == batch_len {
+                // For each gradient divides by the number of batches
                 for gradient in errors.iter_mut() {
                     gradient.scale_mut(1.0/batch_len as f32);
                 }
+                //restart the batch counter
                 example_counter = 0;
+                // Updates all network weights
                 self.update_weights(&errors).expect("error");
+                // New errors in 0
                 errors = <Vec<DMatrix<f32>>>::new();
                 for layer in self.layers.iter().rev() {
                     errors.push(DMatrix::zeros(layer.len(), layer.inputs_len() + 1));

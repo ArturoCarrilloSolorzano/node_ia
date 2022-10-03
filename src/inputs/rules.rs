@@ -9,17 +9,17 @@ pub fn main() -> LearningRules{
     let mut buffer = String::new();
     println!("Numero de iteraciones:");
     // `read_line` returns `Result` of bytes read
-    stdin().read_line(&mut buffer);
+    stdin().read_line(&mut buffer).unwrap();
 
     let max_iterations = match buffer.trim_end() {
-        "" => Ok(50 as i64),
+        "" => Ok(400 as i64),
         value => value.parse::<i64>(),
     }
     .expect("input invalido");
     let mut buffer = String::new();
     println!("Error deseado:");
     // `read_line` returns `Result` of bytes read
-    stdin().read_line(&mut buffer);
+    stdin().read_line(&mut buffer).unwrap();
 
     let min_error = match buffer.trim_end() {
         "" => Ok(0.1 as f32),
@@ -29,10 +29,10 @@ pub fn main() -> LearningRules{
     let mut buffer = String::new();
     println!("Tasa de aprendizaje:");
     // `read_line` returns `Result` of bytes read
-    stdin().read_line(&mut buffer);
+    stdin().read_line(&mut buffer).unwrap();
 
     let learning_rate = match buffer.trim_end() {
-        "" => Ok(0.5 as f32),
+        "" => Ok(0.1 as f32),
         value => value.parse::<f32>(),
     }
     .expect("input invalido");
