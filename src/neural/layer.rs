@@ -5,6 +5,8 @@ use nalgebra::{DMatrix, DVector};
 
 use super::{ecuations::Ecuation, neuron::Neuron, BackpropagtionByproduct};
 
+pub mod softmax;
+
 pub trait Layer {
     fn forward(&self, inputs: &DVector<f32>) -> DVector<f32>;
     fn back(&self, errors: &Vec<f32>, inputs: &DVector<f32>) -> BackpropagtionByproduct;
