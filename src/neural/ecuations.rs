@@ -2,6 +2,7 @@ pub mod tanh;
 pub mod squared;
 pub mod sigmoid;
 pub mod relu;
+pub mod softmax;
 use na::DVector;
 
 use super::na;
