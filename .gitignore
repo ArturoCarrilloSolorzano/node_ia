@@ -2,3 +2,4 @@
 Session.*
 vscode/
 *.png
+.DS_STORE
