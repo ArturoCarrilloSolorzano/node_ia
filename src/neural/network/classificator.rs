@@ -1,7 +1,7 @@
-use nalgebra::{DVector, DMatrix};
+use nalgebra::{DMatrix, DVector};
 
 use crate::neural::{
-    ecuations::{relu::ReLU, ErrorEcuation},
+    ecuations::{crossentropy::CrossEntropy, relu::ReLU},
     layer::{softmax::SoftMaxLayer, BaseLayer, Layer},
 };
 
@@ -9,11 +9,17 @@ use super::NetworkError;
 
 pub struct MultiClassClassificator {
     layers: Vec<BaseLayer<ReLU>>,
-    learning_rate: f32,
+    pub learning_rate: f32,
+    pub num_classes: usize,
 }
 
 impl MultiClassClassificator {
-    pub fn new(input_size: usize, num_classes: usize, layers_size: &[usize], learning_rate: f32) -> Self {
+    pub fn new(
+        input_size: usize,
+        num_classes: usize,
+        layers_size: &[usize],
+        learning_rate: f32,
+    ) -> Self {
         let mut layers = Vec::with_capacity(layers_size.len());
         let mut layer_input_size = input_size;
         for size in layers_size.iter() {
@@ -21,7 +27,11 @@ impl MultiClassClassificator {
             layer_input_size = *size;
         }
         layers.push(BaseLayer::<ReLU>::new(num_classes, layer_input_size));
-        MultiClassClassificator { layers, learning_rate }
+        MultiClassClassificator {
+            layers,
+            learning_rate,
+            num_classes,
+        }
     }
 
     pub fn full_forward(&self, inputs: &DVector<f32>) -> DVector<f32> {
@@ -33,7 +43,7 @@ impl MultiClassClassificator {
         output
     }
 
-    pub fn calc_error(&self, inputs: &DVector<f32>, expected: &DVector<f32>)->NetworkError{
+    pub fn calc_error(&self, inputs: &DVector<f32>, expected: &DVector<f32>) -> NetworkError {
         let mut layer_inputs = Vec::<DVector<f32>>::with_capacity(self.layers.len());
         layer_inputs.push(inputs.clone_owned());
         for (i, layer) in self.layers.iter().enumerate() {
@@ -42,6 +52,7 @@ impl MultiClassClassificator {
         let final_layer_index = self.layers.len() - 1;
         let output = layer_inputs.last().unwrap();
         let errors_deriv = SoftMaxLayer::back(expected, output);
+        let output = SoftMaxLayer::forward(output);
         let mut layer_error = errors_deriv.as_slice().to_vec();
         let mut gradients = Vec::<DMatrix<f32>>::with_capacity(self.layers.len());
         for (i, layer) in self.layers.iter().rev().enumerate() {
@@ -65,7 +76,7 @@ impl MultiClassClassificator {
         return Ok(());
     }
 
-    pub fn sgd_epoch<T: ErrorEcuation>(
+    pub fn sgd_epoch(
         &mut self,
         inputs: &Vec<DVector<f32>>,
         expected: &Vec<DVector<f32>>,
@@ -77,13 +88,13 @@ impl MultiClassClassificator {
         for (i, input) in inputs.iter().enumerate() {
             let error = self.calc_error(&input, &expected[i]);
             self.update_weights(&error.gradients)?;
-            avg += T::calc(&error.raw_output, &expected[i]).sum() / error.raw_output.len() as f32;
+            avg += CrossEntropy::calc(&error.raw_output, &expected[i]);
         }
         avg /= inputs.len() as f32;
         Ok(avg)
     }
 
-    pub fn mini_batch_epoch<T: ErrorEcuation>(
+    pub fn mini_batch_epoch(
         &mut self,
         inputs: &Vec<DVector<f32>>,
         expected: &Vec<DVector<f32>>,
@@ -106,11 +117,11 @@ impl MultiClassClassificator {
                 errors[i] += gradient;
             }
             // Averga error of all outputs
-            avg += T::calc(&error.raw_output, &expected[i]).sum() / error.raw_output.len() as f32;
+            avg += CrossEntropy::calc(&error.raw_output, &expected[i]);
             if example_counter == batch_len {
                 // For each gradient divides by the number of batches
                 for gradient in errors.iter_mut() {
-                    gradient.scale_mut(1.0/batch_len as f32);
+                    gradient.scale_mut(1.0 / batch_len as f32);
                 }
                 //restart the batch counter
                 example_counter = 0;

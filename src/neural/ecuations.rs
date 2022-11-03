@@ -3,6 +3,7 @@ pub mod squared;
 pub mod sigmoid;
 pub mod relu;
 pub mod softmax;
+pub mod crossentropy;
 use na::DVector;
 
 use super::na;

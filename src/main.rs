@@ -1,12 +1,8 @@
-use file::reader::FileOutput;
+use file::reader::{FileOutput, Reader};
 use nalgebra::DVector;
-use neural::layer::Layer;
+use neural::network::classificator::MultiClassClassificator;
 
-use crate::neural::{
-    ecuations::{squared::SquaredError, tanh::TanH},
-    layer::BaseLayer,
-    network::Network,
-};
+use crate::file::{particioner::random_partition, randomizer::no_duplicates_random};
 
 pub mod chart;
 pub mod file;
@@ -15,40 +11,27 @@ pub mod neural;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let lerning_rules = inputs::rules::main();
-    let network_size = inputs::neural_config::main();
 
-    //let train_data = file::reader::main("XOR_trn.csv");
-    let train_data = file::reader::main("concentlite.csv");
-    let _test_data = file::reader::main("concentlite_tst.csv");
-    let mut layers = Vec::<Box<dyn Layer>>::with_capacity(network_size.len() + 1);
-    let mut input_len = 2;
-    let final_out_len = 1;
+    let reader = Reader::new(4, 3);
+    let data = reader.read("irisbin.csv")?;
+    let partition = random_partition(&data, 0.8);
 
-    for size in network_size.iter() {
-        layers.push(Box::from(BaseLayer::<TanH>::new(*size, input_len)));
-        input_len = *size;
-    }
-    layers.push(Box::from(BaseLayer::<TanH>::new(final_out_len, input_len)));
-
-    let mut network = Network {
-        layers,
-        learning_rate: lerning_rules.learning_rate,
-    };
-
+    let mut network = MultiClassClassificator::new(4, 3, &[125, 255], 0.001);
+    test_and_chart(&network, "help.png", &partition.test);
     full(
         &mut network,
         lerning_rules.min_error,
         lerning_rules.max_iterations as u32,
-        &train_data,
-        &train_data,
-        "graphs/concentile.png",
+        &partition.train,
+        &partition.test,
+        "help1.png",
     );
 
     Ok(())
 }
 
 fn full(
-    network: &mut Network,
+    network: &mut MultiClassClassificator,
     min_error: f32,
     max_iterations: u32,
     input: &FileOutput,
@@ -59,44 +42,73 @@ fn full(
     test_and_chart(network, name, test);
 }
 
-fn train(network: &mut Network, min_error: f32, max_iterations: u32, train: &FileOutput) {
+fn tanh_to_hotone(tanh: &Vec<f32>) -> DVector<f32> {
+    let mut vector = DVector::<f32>::zeros(tanh.len());
+    for (index, value) in tanh.iter().enumerate() {
+        if *value > 0.0 {
+            vector[index] = 1.0;
+        }
+    }
+    vector
+}
+
+fn separate_data(data: FileOutput) -> (Vec<DVector<f32>>, Vec<DVector<f32>>) {
     let mut inputs = Vec::<DVector<f32>>::new();
     let mut expected = Vec::<DVector<f32>>::new();
-    for (i, input) in train.inputs.iter().enumerate() {
-        let (x, y) = input;
-        inputs.push(DVector::from_vec(vec![x.to_owned(), y.to_owned()]));
-        expected.push(DVector::from_vec(vec![train.expected[i]]));
+    for record in data.iter() {
+        inputs.push(DVector::from_vec(record.inputs.clone()));
+        expected.push(tanh_to_hotone(&record.expected));
     }
+    (inputs, expected)
+}
+
+fn train(
+    network: &mut MultiClassClassificator,
+    min_error: f32,
+    max_iterations: u32,
+    train: &FileOutput,
+) {
     let mut error_avg = 1.0;
     let mut gen = 0;
     while error_avg > min_error && gen < max_iterations {
+        let random = no_duplicates_random(train);
+        let (inputs, expected) = separate_data(random);
         println!("----- Entrenando generación {} -----", gen);
-        error_avg = network
-            .mini_batch_epoch::<SquaredError>(&inputs, &expected, 32)
-            .expect("error");
-        // updates the learning rate
-        //network.learning_rate *= 1.0 / (1.0 + 0.001 * gen as f32);
-        // error_avg = network
-        //     .sgd_epoch::<SquaredError>(&inputs, &expected)
-        //     .expect("error");
+        error_avg = network.sgd_epoch(&inputs, &expected).expect("error");
         gen += 1;
         println!("\tError promedio: {}", error_avg);
     }
 }
 
-fn test_and_chart(network: &Network, name: &str, test: &FileOutput) {
-    let mut scatter_positive: Vec<(f32, f32)> = Vec::new();
-    let mut scatter_negative: Vec<(f32, f32)> = Vec::new();
-    for input in test.inputs.iter() {
-        let (x, y) = input;
-        let vector_input = DVector::from_vec(vec![x.to_owned(), y.to_owned()]);
-        let output = network.full_forward(&vector_input);
-        //println!("{}", output);
-        if output[0] > 0.0 {
-            scatter_positive.push(input.clone());
-        } else {
-            scatter_negative.push(input.clone());
+fn hotone_to_class(hotone: &Vec<f32>) -> usize {
+    let mut class: usize = 0;
+    for (index, item) in hotone.iter().enumerate() {
+        if hotone[class] < *item {
+            class = index;
         }
     }
-    //chart::main(scatter_positive, scatter_negative, name);
+    class
+}
+
+fn test_and_chart(network: &MultiClassClassificator, name: &str, test: &FileOutput) {
+    let mut map = Vec::with_capacity(network.num_classes);
+    for _ in 0..network.num_classes {
+        let row = Vec::from_iter(std::iter::repeat(0).take(network.num_classes));
+        map.push(row);
+    }
+    let mut right_predicctions = 0;
+    for record in test.iter() {
+        let prediction = network.full_forward(&DVector::from_vec(record.inputs.clone()));
+        let predicted_class = hotone_to_class(&prediction.as_slice().to_vec());
+        let acctual_class = hotone_to_class(&record.expected);
+        if acctual_class == predicted_class {
+            right_predicctions += 1;
+        }
+        map[acctual_class][predicted_class] += 1;
+    }
+    println!(
+        "Porcentage de acierto {}",
+        right_predicctions as f32 / test.len() as f32
+    );
+    chart::main(&map, name);
 }

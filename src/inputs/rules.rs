@@ -1,11 +1,10 @@
 use std::io::stdin;
-pub struct LearningRules{
+pub struct LearningRules {
     pub max_iterations: i64,
     pub min_error: f32,
-    pub learning_rate: f32
 }
 
-pub fn main() -> LearningRules{
+pub fn main() -> LearningRules {
     let mut buffer = String::new();
     println!("Numero de iteraciones:");
     // `read_line` returns `Result` of bytes read
@@ -26,16 +25,9 @@ pub fn main() -> LearningRules{
         value => value.parse::<f32>(),
     }
     .expect("input invalido");
-    let mut buffer = String::new();
-    println!("Tasa de aprendizaje:");
-    // `read_line` returns `Result` of bytes read
-    stdin().read_line(&mut buffer).unwrap();
 
-    let learning_rate = match buffer.trim_end() {
-        "" => Ok(0.1 as f32),
-        value => value.parse::<f32>(),
-    }
-    .expect("input invalido");
-
-    return LearningRules{max_iterations, min_error, learning_rate}
+    return LearningRules {
+        max_iterations,
+        min_error,
+    };
 }
