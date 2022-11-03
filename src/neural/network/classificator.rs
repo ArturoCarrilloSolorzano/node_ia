@@ -1,44 +1,39 @@
-use nalgebra::{DMatrix, DVector};
+use nalgebra::{DVector, DMatrix};
 
-use super::{ecuations::ErrorEcuation, layer::Layer};
+use crate::neural::{
+    ecuations::{relu::ReLU, ErrorEcuation},
+    layer::{softmax::SoftMaxLayer, BaseLayer, Layer},
+};
 
-pub mod classificator;
+use super::NetworkError;
 
-pub struct Network {
-    pub layers: Vec<Box<dyn Layer>>,
-    pub learning_rate: f32,
+pub struct MultiClassClassificator {
+    layers: Vec<BaseLayer<ReLU>>,
+    learning_rate: f32,
 }
 
-pub struct NetworkError {
-    pub gradients: Vec<DMatrix<f32>>,
-    pub raw_output: DVector<f32>,
-}
-
-impl Network {
-    pub fn new(learning_rate: f32) -> Self {
-        Network {
-            layers: Vec::new(),
-            learning_rate,
+impl MultiClassClassificator {
+    pub fn new(input_size: usize, num_classes: usize, layers_size: &[usize], learning_rate: f32) -> Self {
+        let mut layers = Vec::with_capacity(layers_size.len());
+        let mut layer_input_size = input_size;
+        for size in layers_size.iter() {
+            layers.push(BaseLayer::<ReLU>::new(*size, layer_input_size));
+            layer_input_size = *size;
         }
-    }
-
-    pub fn add_layer(&mut self, layer: Box<dyn Layer>) {
-        self.layers.push(layer);
+        layers.push(BaseLayer::<ReLU>::new(num_classes, layer_input_size));
+        MultiClassClassificator { layers, learning_rate }
     }
 
     pub fn full_forward(&self, inputs: &DVector<f32>) -> DVector<f32> {
-        let mut output = inputs.clone_owned();
+        let mut output = inputs.clone();
         for layer in self.layers.iter() {
             output = layer.forward(&output);
         }
+        output = SoftMaxLayer::forward(&output);
         output
     }
 
-    pub fn calc_error<T: ErrorEcuation>(
-        &self,
-        inputs: &DVector<f32>,
-        expected: &DVector<f32>,
-    ) -> NetworkError {
+    pub fn calc_error(&self, inputs: &DVector<f32>, expected: &DVector<f32>)->NetworkError{
         let mut layer_inputs = Vec::<DVector<f32>>::with_capacity(self.layers.len());
         layer_inputs.push(inputs.clone_owned());
         for (i, layer) in self.layers.iter().enumerate() {
@@ -46,7 +41,7 @@ impl Network {
         }
         let final_layer_index = self.layers.len() - 1;
         let output = layer_inputs.last().unwrap();
-        let errors_deriv = T::deriv(output, expected);
+        let errors_deriv = SoftMaxLayer::back(expected, output);
         let mut layer_error = errors_deriv.as_slice().to_vec();
         let mut gradients = Vec::<DMatrix<f32>>::with_capacity(self.layers.len());
         for (i, layer) in self.layers.iter().rev().enumerate() {
@@ -80,7 +75,7 @@ impl Network {
         }
         let mut avg = 0.0;
         for (i, input) in inputs.iter().enumerate() {
-            let error = self.calc_error::<T>(&input, &expected[i]);
+            let error = self.calc_error(&input, &expected[i]);
             self.update_weights(&error.gradients)?;
             avg += T::calc(&error.raw_output, &expected[i]).sum() / error.raw_output.len() as f32;
         }
@@ -105,7 +100,7 @@ impl Network {
         }
         let mut example_counter = 1;
         for (i, input) in inputs.iter().enumerate() {
-            let error = self.calc_error::<T>(&input, &expected[i]);
+            let error = self.calc_error(&input, &expected[i]);
             // Adds up the past gradients to the current ones
             for (i, gradient) in error.gradients.iter().enumerate() {
                 errors[i] += gradient;
@@ -131,13 +126,5 @@ impl Network {
         }
         avg /= inputs.len() as f32;
         Ok(avg)
-    }
-
-    pub fn get_weights(&self) -> Vec<DMatrix<f32>> {
-        let mut weights = Vec::<DMatrix<f32>>::with_capacity(self.layers.len());
-        for layer in self.layers.iter() {
-            weights.push(layer.get_weights());
-        }
-        weights
     }
 }

@@ -98,5 +98,5 @@ fn test_and_chart(network: &Network, name: &str, test: &FileOutput) {
             scatter_negative.push(input.clone());
         }
     }
-    chart::main(scatter_positive, scatter_negative, name);
+    //chart::main(scatter_positive, scatter_negative, name);
 }
