@@ -6,7 +6,7 @@ pub fn main(map: &Vec<Vec<i32>>, name: &str) {
     let root = root.margin(10, 10, 10, 10);
 
     let mut chart = ChartBuilder::on(&root)
-        .caption("Test calisification", ("san-serif", 40).into_font())
+        .caption("Tabla de clasificación", ("san-serif", 40).into_font())
         .x_label_area_size(20)
         .y_label_area_size(40)
         .build_cartesian_2d(0i32..3i32, 0i32..3i32)
